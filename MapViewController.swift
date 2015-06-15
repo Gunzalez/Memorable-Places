@@ -9,33 +9,60 @@
 import UIKit
 import MapKit
 
+
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var mapView: MKMapView!
     
+    var passedAddress:String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.title = "Smack me";
+        var latitude: CLLocationDegrees!
+        
+        var longitude: CLLocationDegrees!
+        
+        if passedAddress != nil {
+        
+            self.title = passedAddress;
+        
+            var singleAddress: Dictionary = memorablePlaces[passedAddress]! as Dictionary
+        
+            latitude = singleAddress["latitude"]!
+        
+            longitude = singleAddress["longitude"]!
+            
+        } else {
+            
+            self.title = "Add new place"
+            
+            latitude = 51.515656
+            
+            longitude = -0.09387
+            
+        }
+        
+        var latDelta: CLLocationDegrees = 0.01
+        
+        var lonDelta: CLLocationDegrees = 0.01
+        
+        var span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, latDelta)
+        
+        var location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        
+        var region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        
+        self.mapView.setRegion(region, animated: true)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

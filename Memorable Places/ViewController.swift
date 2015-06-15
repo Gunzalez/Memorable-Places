@@ -8,26 +8,23 @@
 
 import UIKit
 
+var memorablePlaces = [String: Dictionary<String, Double>]()
+var addressArray = [String]()
+
 class ViewController: UIViewController, UITableViewDelegate {
     
-    var memorablePlaces = [String: Dictionary<String, String>]()
-    var singlePlace = [String: String]()
-    var addressArray = [String]()
+    var addressToPass = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        singlePlace["longitude"] = "-51.0206701"
-        singlePlace["latitude"] = "0.010880"
-        singlePlace["postalcode"] = "N17 0RR"
+        var singlePlace = [String: Double]()
+        singlePlace["latitude"] = 51.6052258
+        singlePlace["longitude"] = -0.0552078
         
-        memorablePlaces["Place One"] = singlePlace;
-        addressArray.append("Place One");
-        
-        
-        
-        
+        memorablePlaces["33B Willoughy Park Road"] = singlePlace;
+        addressArray.append("33B Willoughy Park Road");
         
     }
 
@@ -56,26 +53,25 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        self.performSegueWithIdentifier("showMap", sender: indexPath)
+        addressToPass = addressArray[indexPath.row];
+        
+        self.performSegueWithIdentifier("showMap", sender: self)
         
     }
     
-    
-//    
-//    - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//    {
-//    [self performSegueWithIdentifier:@"masterToDetails" sender:indexPath];
-//    }
-
-
-    
-    
-    
-    
-    
-    
-    
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if (segue.identifier == "showMap") {
+            
+            // initialize new view controller and cast it as your view controller
+            var viewController = segue.destinationViewController as! MapViewController
+            
+            // your new view controller should have property that will store passed value
+            viewController.passedValue = addressToPass
+            
+        }
+        
+    }
     
     
 }
