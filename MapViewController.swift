@@ -21,6 +21,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         // Do any additional setup after loading the view.
         
+        self.mapView.delegate = self
+        
         var latitude: CLLocationDegrees!
         
         var longitude: CLLocationDegrees!
@@ -56,6 +58,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         var region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
         
         self.mapView.setRegion(region, animated: true)
+        
+        if passedAddress != nil {
+            
+            var location = CLLocationCoordinate2DMake(latitude, longitude)
+            var dropPin = MKPointAnnotation()
+            dropPin.coordinate = location
+            dropPin.title = passedAddress
+            mapView.addAnnotation(dropPin)
+            
+        }
         
         
     }

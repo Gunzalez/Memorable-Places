@@ -15,6 +15,11 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     var addressToPass = String()
 
+    @IBAction func newButtonPressed(sender: AnyObject) {
+        
+        performSegueWithIdentifier("newAddress", sender: sender)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -27,7 +32,6 @@ class ViewController: UIViewController, UITableViewDelegate {
         addressArray.append("33B Willoughy Park Road");
         
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -67,9 +71,20 @@ class ViewController: UIViewController, UITableViewDelegate {
             var viewController = segue.destinationViewController as! MapViewController
             
             // your new view controller should have property that will store passed value
-            viewController.passedValue = addressToPass
+            viewController.passedAddress = addressToPass
             
         }
+        
+        if (segue.identifier == "newAddress") {
+            
+            // initialize new view controller and cast it as your view controller
+            var viewController = segue.destinationViewController as! MapViewController
+            
+            // your new view controller should have property that will store passed value
+            viewController.passedAddress = nil
+            
+        }
+        
         
     }
     

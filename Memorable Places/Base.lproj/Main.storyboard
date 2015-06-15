@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--List Of Places-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Memorable_Places" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,7 +35,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vyD-5b-oVP"/>
+                    <navigationItem key="navigationItem" title="List Of Places" id="vyD-5b-oVP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="S3q-h1-Cyw">
+                            <connections>
+                                <action selector="newButtonPressed:" destination="vXZ-lx-hvc" id="aMD-bQ-aGf"/>
+                                <segue destination="T07-iu-j49" kind="show" identifier="newAddress" id="EZf-pz-OXb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <segue destination="T07-iu-j49" kind="show" identifier="showMap" id="ebE-oK-vav"/>
@@ -92,4 +99,7 @@
             <point key="canvasLocation" x="360" y="1083"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="EZf-pz-OXb"/>
+    </inferredMetricsTieBreakers>
 </document>
