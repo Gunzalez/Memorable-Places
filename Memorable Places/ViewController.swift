@@ -33,14 +33,11 @@ class ViewController: UIViewController, UITableViewDelegate {
 //        
 //        memorablePlaces["33B Willoughy Park Road"] = singlePlace;
 //        addressArray.append("33B Willoughy Park Road");
-        
-        //println(addressArray.count)
+
         
     }
     
     override func viewDidAppear(animated: Bool) {
-        println(memorablePlaces.count)
-        println(addressArray.count)
         tableView.reloadData()
     }
     

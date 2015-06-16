@@ -15,6 +15,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var mapView: MKMapView!
     
     var passedAddress:String!
+    
+    var locationName:String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,18 +94,63 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             singlePlace["latitude"] = newCoord.latitude
             singlePlace["longitude"] = newCoord.longitude
             
-            memorablePlaces["New Location"] = singlePlace
-            addressArray.append("New Location")
+            var geoCoder = CLGeocoder()
+            var location = CLLocation(latitude: newCoord.latitude, longitude: newCoord.longitude)
             
-            var newAnotation = MKPointAnnotation()
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                let placeArray = placemarks as! [CLPlacemark]
+                
+                // Place details
+                var placeMark: CLPlacemark!
+                placeMark = placeArray[0]
+                
+                // Address dictionary
+                //println(placeMark.addressDictionary)
+                
+                // Location name
+                if let locationName = placeMark.addressDictionary["Name"] as? NSString {
+                    //println(locationName)
+                    self.locationName = String(locationName)
+                }
+                
+                // Street address
+                if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
+                    //println(street)
+                    //self.locationName = self.locationName + "," + String(street)
+                }
+                
+                // City
+                if let city = placeMark.addressDictionary["City"] as? NSString {
+                    //println(city)
+                }
+                
+                // Zip code
+                if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
+                    //println(zip)
+                    self.locationName = self.locationName + ", " + String(zip)
+                }
+                
+                // Country
+                if let country = placeMark.addressDictionary["Country"] as? NSString {
+                    //println(country)
+                }
+                
+                
+                memorablePlaces[self.locationName] = singlePlace
+                addressArray.append(self.locationName)
+                
+                var newAnotation = MKPointAnnotation()
+                
+                newAnotation.coordinate = newCoord
+                
+                newAnotation.title = self.locationName
+                
+                newAnotation.subtitle = "Now in your list."
+                
+                self.mapView.addAnnotation(newAnotation)
+                
+            })
             
-            newAnotation.coordinate = newCoord
-            
-            newAnotation.title = "New Location"
-            
-            newAnotation.subtitle = "This has been added!"
-            
-            self.mapView.addAnnotation(newAnotation)
         
         }
         
