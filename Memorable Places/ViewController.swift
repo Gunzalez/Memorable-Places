@@ -27,14 +27,17 @@ class ViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-//        var singlePlace = [String: Double]()
-//        singlePlace["latitude"] = 51.6052258
-//        singlePlace["longitude"] = -0.0552078
-//        
-//        memorablePlaces["33B Willoughy Park Road"] = singlePlace;
-//        addressArray.append("33B Willoughy Park Road");
+        if NSUserDefaults.standardUserDefaults().objectForKey("memorablePlaces") != nil {
+            
+            memorablePlaces = NSUserDefaults.standardUserDefaults().objectForKey("memorablePlaces") as! [String: Dictionary<String, Double>];
+            
+            for (nameOfPlace, LongLat) in memorablePlaces {
+                
+                addressArray.append(nameOfPlace)
+            }
+            
+        }
 
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -88,12 +91,14 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
+        
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
             
             var placeToRemove = addressArray[indexPath.row]
             
             memorablePlaces[placeToRemove] = nil
+            
+            NSUserDefaults.standardUserDefaults().setObject(memorablePlaces, forKey: "memorablePlaces");
             
             addressArray.removeAtIndex(indexPath.row)
             

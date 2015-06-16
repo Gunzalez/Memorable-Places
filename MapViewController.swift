@@ -137,6 +137,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                 
                 memorablePlaces[self.locationName] = singlePlace
+                
+                NSUserDefaults.standardUserDefaults().setObject(memorablePlaces, forKey: "memorablePlaces");
+                
                 addressArray.append(self.locationName)
                 
                 var newAnotation = MKPointAnnotation()
