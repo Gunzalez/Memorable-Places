@@ -45,6 +45,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="tableView" destination="Z8E-ec-zlU" id="4S9-4z-U2F"/>
                         <segue destination="T07-iu-j49" kind="show" identifier="showMap" id="ebE-oK-vav"/>
                     </connections>
                 </viewController>

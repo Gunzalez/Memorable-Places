@@ -39,7 +39,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
         } else {
             
-            self.title = "Add new place"
+            self.title = "New place"
             
             latitude = 51.515656
             
@@ -62,13 +62,50 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if passedAddress != nil {
             
             var location = CLLocationCoordinate2DMake(latitude, longitude)
+            
             var dropPin = MKPointAnnotation()
+            
             dropPin.coordinate = location
+            
             dropPin.title = passedAddress
+            
             mapView.addAnnotation(dropPin)
             
         }
         
+        var longPress = UILongPressGestureRecognizer(target: self, action: "action:")
+        
+        longPress.minimumPressDuration = 2.0
+        
+        mapView.addGestureRecognizer(longPress)
+    }
+    
+    func action(gestureRecognizer:UIGestureRecognizer) {
+        
+        if ( gestureRecognizer.state == UIGestureRecognizerState.Began ){
+            
+            var touchPoint = gestureRecognizer.locationInView(self.mapView)
+            
+            var newCoord:CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
+            
+            var singlePlace = [String: Double]()
+            singlePlace["latitude"] = newCoord.latitude
+            singlePlace["longitude"] = newCoord.longitude
+            
+            memorablePlaces["New Location"] = singlePlace
+            addressArray.append("New Location")
+            
+            var newAnotation = MKPointAnnotation()
+            
+            newAnotation.coordinate = newCoord
+            
+            newAnotation.title = "New Location"
+            
+            newAnotation.subtitle = "This has been added!"
+            
+            self.mapView.addAnnotation(newAnotation)
+        
+        }
         
     }
 

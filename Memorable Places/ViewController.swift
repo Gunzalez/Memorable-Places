@@ -14,24 +14,36 @@ var addressArray = [String]()
 class ViewController: UIViewController, UITableViewDelegate {
     
     var addressToPass = String()
+    
+    @IBOutlet var tableView: UITableView!
+    
 
     @IBAction func newButtonPressed(sender: AnyObject) {
         
-        performSegueWithIdentifier("newAddress", sender: sender)
+        performSegueWithIdentifier("newAddress", sender: self)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var singlePlace = [String: Double]()
-        singlePlace["latitude"] = 51.6052258
-        singlePlace["longitude"] = -0.0552078
+//        var singlePlace = [String: Double]()
+//        singlePlace["latitude"] = 51.6052258
+//        singlePlace["longitude"] = -0.0552078
+//        
+//        memorablePlaces["33B Willoughy Park Road"] = singlePlace;
+//        addressArray.append("33B Willoughy Park Road");
         
-        memorablePlaces["33B Willoughy Park Road"] = singlePlace;
-        addressArray.append("33B Willoughy Park Road");
+        //println(addressArray.count)
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        println(memorablePlaces.count)
+        println(addressArray.count)
+        tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -40,16 +52,16 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return memorablePlaces.count
+        return addressArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell");
         
-        var placeName = addressArray[indexPath.row]
+        var nameOfPlace = addressArray[indexPath.row]
         
-        cell.textLabel?.text = placeName;
+        cell.textLabel?.text = nameOfPlace;
         
         return cell;
         
@@ -64,23 +76,14 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+            
+        var viewController = segue.destinationViewController as! MapViewController
         
         if (segue.identifier == "showMap") {
-            
-            // initialize new view controller and cast it as your view controller
-            var viewController = segue.destinationViewController as! MapViewController
-            
-            // your new view controller should have property that will store passed value
             viewController.passedAddress = addressToPass
-            
         }
         
         if (segue.identifier == "newAddress") {
-            
-            // initialize new view controller and cast it as your view controller
-            var viewController = segue.destinationViewController as! MapViewController
-            
-            // your new view controller should have property that will store passed value
             viewController.passedAddress = nil
             
         }
