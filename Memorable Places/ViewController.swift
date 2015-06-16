@@ -85,7 +85,20 @@ class ViewController: UIViewController, UITableViewDelegate {
             
         }
         
-        
+    }
+    
+    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            
+            var placeToRemove = addressArray[indexPath.row]
+            
+            memorablePlaces[placeToRemove] = nil
+            
+            addressArray.removeAtIndex(indexPath.row)
+            
+            tableView.reloadData()
+        }
     }
     
     
